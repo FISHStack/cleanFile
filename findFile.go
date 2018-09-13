@@ -5,6 +5,7 @@ import(
 	"io/ioutil"
 	"strings"
 	"sync"
+	"flag"
 )
 
 var jsFiles = make([]string, 10)
@@ -14,7 +15,10 @@ var complete chan int = make(chan int)
 var wg sync.WaitGroup
 
 func  main(){
-	readDir("E:\\workspace-sts-3.8.1.RELEASE\\demo\\bootdo","")
+	//  E:\\workspace-sts-3.8.1.RELEASE\\demo\\bootdo
+	path := flag.String("path","/Users/liangyuanpeng/","dir path")
+	flag.Parse()
+	readDir(*path,"")
 	fmt.Println(len(jsFiles))
 	fmt.Println(len(htmlFiles))
 
@@ -63,7 +67,7 @@ func readJsInHtml(jsIndex int,jsFile string){
 func readDir(dirPath string, tab string){
 	flist,e := ioutil.ReadDir(dirPath)
 	if e != nil {
-		fmt.Println("Read file error")
+		fmt.Println("Read file error s%",e)
 		return
 	}
 	
